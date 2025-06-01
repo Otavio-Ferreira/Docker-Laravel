@@ -74,14 +74,14 @@
 
 <body>
   <div id="header">
-    <h1>{{$title}}</h1>
+    <h1>Esqueceu sua senha?</h1>
   </div>
   <div id="body">
     <h2>Instruções para resetar senha!</h2>
     <hr>
     <p>Olá, <span>{{ $name }}</span>! <br><br> Recebemos sua solicitação para redefinir sua senha no horário <span>{{ $time }}</span>. <br><br> Acesse o link abaixo para iniciar!</p>
     <hr>
-    <a href="{{ $domain }}">Acessar</a>
+    <a href="{{ route("login.edit", $token) }}">Acessar</a>
   </div>
 </body>
 

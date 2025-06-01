@@ -64,6 +64,7 @@
               </span>
               <div class="d-none d-xl-block ps-2">
                 <div>{{ Auth::user()->name }}</div>
+                <div class="mt-1 fs-6 text-muted">{{ucfirst(Auth::user()->roles->first()->name)}}</div>
               </div>
             </a>
             <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -103,22 +104,22 @@
                 </x-navbar.navbar-item>
               @endcan --}}
 
-              {{-- @canany(['adicionar_usuário', 'adicionar_grupo', 'adicionar_permissões'])
+              @canany(['adicionar_usuário', 'adicionar_grupo', 'adicionar_permissões'])
                 <x-navbar.navbar-item route="" title="Configurações"
                   isActive="{{ request()->routeIs(['users.*', 'roles.*', 'permissions.*']) ? true : false }}"
                   icon="ti-settings">
                   <x-slot:links>
                     @can('adicionar_usuário')
                       <a class="dropdown-item"
-                        href="{{ tenant() ? tenant_route_url('usuarios') : route('users.index') }}">Usuários</a>
+                        href="{{ route('users.index') }}">Usuários</a>
                     @endcan
                     @can('adicionar_grupo')
                       <a class="dropdown-item"
-                        href="{{ tenant() ? tenant_route_url('grupos') : route('roles.index') }}">Grupos</a>
+                        href="{{ route('roles.index') }}">Grupos</a>
                     @endcan
                   </x-slot:links>
                 </x-navbar.navbar-item>
-              @endcanany --}}
+              @endcanany
 
               {{-- @role('SuperAdmin')
                             <x-navbar.navbar-item route="" title="Configurações" isActive="{{request()->routeIs(['users.*', 'roles.*','permissions.*']) ? true : false}}" icon="ti-settings">
@@ -193,7 +194,6 @@
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
   {{-- <script src="{{ asset('assets/libs/apexcharts/dist/apexcharts.min.js') }}"></script> --}}
-  {{-- @include('sweetalert::alert') --}}
   @yield('scripts')
 
 </body>
