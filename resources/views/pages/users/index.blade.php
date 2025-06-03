@@ -16,12 +16,11 @@
         </div>
         <div class="col-auto ms-auto">
           <div class="btn-list">
-            <a href="#" class="btn btn-primary d-sm-inline-block" data-bs-toggle="modal"
-              data-bs-target="#modal-add-user">
+            <a href="{{ route('users.create') }}" class="btn btn-primary d-sm-inline-block">
               <i class="icon ti ti-user-plus"></i>
               Adicionar usuário
             </a>
-            <x-modal.modal route="{{ tenant() ? tenant_route_url('usuarios/adicionar') : route('users.store') }}"
+            {{-- <x-modal.modal route="{{ route('users.store') }}"
               id="modal-add-user" class="modal-dialog-centered" title="Adicionar usuário" typeBtnClose="button"
               classBtnClose="me-auto" textBtnClose="Cancelar" typeBtnSave="submit" classBtnSave="btn-primary"
               textBtnSave="Salvar">
@@ -51,7 +50,7 @@
                   </x-slot:options>
                 </x-form-elements.select.select>
               </x-slot:content>
-            </x-modal.modal>
+            </x-modal.modal> --}}
           </div>
         </div>
       </div>
@@ -86,7 +85,7 @@
                   <button class="btn btn-secondary" data-bs-toggle="modal"
                     data-bs-target="#modal-edit-user{{ $user->id }}"><i class="ti ti-edit"></i></button>
                   <x-modal.modal
-                    route="{{ tenant() ? tenant_route_url('usuarios/atualizar/'.$user->id) : route('users.update', $user->id) }}"
+                    route="{{ route('users.update', $user->id) }}"
                     id="modal-edit-user{{ $user->id }}" class="modal-dialog-centered" title="Editar usuário"
                     typeBtnClose="button" classBtnClose="me-auto" textBtnClose="Cancelar" typeBtnSave="submit"
                     classBtnSave="btn-primary" textBtnSave="Salvar">
@@ -123,7 +122,7 @@
                   <button class="btn btn-danger" data-bs-toggle="modal"
                     data-bs-target="#modal-delete-user{{ $user->id }}"><i class="ti ti-trash"></i></button>
 
-                  <x-modal.modal-alert route="{{ tenant() ? tenant_route_url('usuarios/deletar/'.$user->id) : route('users.destroy', $user->id) }}"
+                  <x-modal.modal-alert route="{{ route('users.destroy', $user->id) }}"
                     id="modal-delete-user{{ $user->id }}" class="modal-dialog-centered modal-sm"
                     background="bg-danger" classBody="text-center py-4" title="Excluír usuário" typeBtnClose="button"
                     classBtnClose="me-auto w-100" textBtnClose="Cancelar" typeBtnSave="submit"

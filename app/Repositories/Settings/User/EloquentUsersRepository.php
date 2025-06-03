@@ -4,6 +4,7 @@ namespace App\Repositories\Settings\User;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class EloquentUsersRepository implements UsersRepository
 {
@@ -15,7 +16,7 @@ class EloquentUsersRepository implements UsersRepository
         return User::where('uuid', $uuid)->first();
     }
 
-    public function getAll($uuid){
+    public function getAll(){
         return User::get();
     }
 
@@ -23,7 +24,20 @@ class EloquentUsersRepository implements UsersRepository
 
         $user = User::create([
             "name" => $request->name,
-            "email" => $request->email
+            "email" => $request->email,
+            'remember_token' => Str::random(10),
+        ]);
+
+        return $user;
+    }
+
+    public function store_all($request, $password){
+
+        $user = User::create([
+            "name" => $request->name,
+            "email" => $request->email,
+            'password' => Hash::make($password),
+            'status' => true
         ]);
 
         return $user;

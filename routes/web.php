@@ -25,7 +25,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [HomeController::class, 'index'])->name('home.index');
 
     Route::get('users/sair', [UsersController::class, 'logout'])->name('logout');
-
+    
     Route::group(['middleware' => ['auth', 'permission:adicionar_grupo']], function () {
         Route::get('gupos', [RolesController::class, 'index'])->name('roles.index');
         Route::post('grupos/adicionar', [RolesController::class, 'store'])->name('roles.store');
@@ -34,6 +34,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['middleware' => ['auth', 'permission:adicionar_usuário']], function () {
         Route::get('usuarios', [UsersController::class, 'index'])->name('users.index');
+        Route::get('usuarios/adicionar', [UsersController::class, 'create'])->name('users.create');
         Route::post('usuarios/adicionar', [UsersController::class, 'store'])->name('users.store');
         Route::post('usuarios/atualizar/{id}', [UsersController::class, 'update'])->name('users.update');
         Route::delete('usuarios/deletar/{id}', [UsersController::class, 'destroy'])->name('users.destroy');
