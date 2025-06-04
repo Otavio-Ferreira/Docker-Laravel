@@ -1,5 +1,24 @@
 @extends('templates.template')
 
+@section('styles')
+  <link rel="stylesheet" href="{{ asset('assets/css/kanban/dataTables.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/kanban/styleDataTable.css') }}">
+  <style>
+    #table thead th {
+      white-space: nowrap;
+      width: auto;
+    }
+
+    #table tbody td {
+      white-space: nowrap;
+    }
+
+    #table {
+      table-layout: fixed;
+      width: 100%;
+    }
+  </style>
+@endsection
 @section('content')
   <div class="page-header">
     <div class="">
@@ -20,46 +39,18 @@
               <i class="icon ti ti-user-plus"></i>
               Adicionar usuário
             </a>
-            {{-- <x-modal.modal route="{{ route('users.store') }}"
-              id="modal-add-user" class="modal-dialog-centered" title="Adicionar usuário" typeBtnClose="button"
-              classBtnClose="me-auto" textBtnClose="Cancelar" typeBtnSave="submit" classBtnSave="btn-primary"
-              textBtnSave="Salvar">
-              <x-slot:content>
-                @include('components.form-elements.input.input', [
-                    'title' => 'Nome',
-                    'type' => 'text',
-                    'class' => 'mb-3',
-                    'name' => 'name',
-                    'required' => 'true',
-                    'placeholder' => 'Digite o nome do usuário',
-                ])
-                @include('components.form-elements.input.input', [
-                    'title' => 'Email',
-                    'type' => 'text',
-                    'class' => 'mb-3',
-                    'name' => 'email',
-                    'required' => 'true',
-                    'placeholder' => 'Digite o email do usuário',
-                ])
-                <x-form-elements.select.select title="Grupo de permissões" id="role" name="role">
-                  <x-slot:options>
-                    <option value="" selected>Selecione</option>
-                    @foreach ($roles as $role)
-                      <option value="{{ $role->name }}">{{ $role->name }}</option>
-                    @endforeach
-                  </x-slot:options>
-                </x-form-elements.select.select>
-              </x-slot:content>
-            </x-modal.modal> --}}
+
+            <x-table.search></x-table.search>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="page-body">
-    <div class="card">
+    <div class="">
       <div class="table-responsive">
-        <x-table.table tableClass="table-vcenter card-table table-striped">
+        <x-table.table tableClass="border unded-3 w-100 table table-vcenter exclude bg-white card-table table-striped"
+          tableId="dataTable">
           <x-slot:ths>
             <th>Nome</th>
             <th>Email</th>
@@ -83,12 +74,10 @@
                 </td>
                 <td>
                   <button class="btn btn-secondary" data-bs-toggle="modal"
-                    data-bs-target="#modal-edit-user{{ $user->id }}"><i class="ti ti-edit"></i></button>
-                  <x-modal.modal
-                    route="{{ route('users.update', $user->id) }}"
-                    id="modal-edit-user{{ $user->id }}" class="modal-dialog-centered" title="Editar usuário"
-                    typeBtnClose="button" classBtnClose="me-auto" textBtnClose="Cancelar" typeBtnSave="submit"
-                    classBtnSave="btn-primary" textBtnSave="Salvar">
+                    data-bs-target="#modal-edit-user{{ $user->uuid }}"><i class="ti ti-edit"></i></button>
+                  <x-modal.modal route="{{ route('users.update', $user->uuid) }}" id="modal-edit-user{{ $user->uuid }}"
+                    class="modal-dialog-centered" title="Editar usuário" typeBtnClose="button" classBtnClose="me-auto"
+                    textBtnClose="Cancelar" typeBtnSave="submit" classBtnSave="btn-primary" textBtnSave="Salvar">
                     <x-slot:content>
                       @include('components.form-elements.input.input', [
                           'title' => 'Nome',
@@ -120,10 +109,10 @@
                 </td>
                 <td>
                   <button class="btn btn-danger" data-bs-toggle="modal"
-                    data-bs-target="#modal-delete-user{{ $user->id }}"><i class="ti ti-trash"></i></button>
+                    data-bs-target="#modal-delete-user{{ $user->uuid }}"><i class="ti ti-trash"></i></button>
 
-                  <x-modal.modal-alert route="{{ route('users.destroy', $user->id) }}"
-                    id="modal-delete-user{{ $user->id }}" class="modal-dialog-centered modal-sm"
+                  <x-modal.modal-alert route="{{ route('users.destroy', $user->uuid) }}"
+                    id="modal-delete-user{{ $user->uuid }}" class="modal-dialog-centered modal-sm"
                     background="bg-danger" classBody="text-center py-4" title="Excluír usuário" typeBtnClose="button"
                     classBtnClose="me-auto w-100" textBtnClose="Cancelar" typeBtnSave="submit"
                     classBtnSave="btn-danger w-100" textBtnSave="Deletar">
@@ -143,4 +132,7 @@
       </div>
     </div>
   </div>
+@endsection
+@section('scripts')
+  <script src="{{ asset('assets/js/kanban/startOneDataTable.js') }}"></script>
 @endsection

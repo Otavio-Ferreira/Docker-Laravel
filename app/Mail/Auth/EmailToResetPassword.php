@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mail\Auht;
+namespace App\Mail\Auth;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;

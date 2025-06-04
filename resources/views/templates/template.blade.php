@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
   <meta charset="utf-8" />
@@ -41,8 +41,8 @@
         </button>
         <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
           <a href="/dashboard">
-            <img src="{{ asset('assets/img/illustrations/logo.svg') }}" width="90" height="26"
-              alt="InterSuite" class="navbar-brand-image">
+            <img src="{{ asset('assets/img/illustrations/logo.svg') }}" width="90" height="26" alt="InterSuite"
+              class="navbar-brand-image">
           </a>
         </h1>
         <div class="navbar-nav flex-row order-md-last">
@@ -64,10 +64,12 @@
               </span>
               <div class="d-none d-xl-block ps-2">
                 <div>{{ Auth::user()->name }}</div>
-                <div class="mt-1 fs-6 text-muted">{{ucfirst(Auth::user()->roles->first()->name)}}</div>
+                <div class="mt-1 fs-6 text-muted">{{ ucfirst(Auth::user()->roles->first()->name) }}</div>
               </div>
             </a>
             <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+              <a href="{{ route('profile.index') }}" class="dropdown-item m-0">Perfil</a>
+              <div class="dropdown-divider m-0"></div>
               <a href="{{ route('logout') }}" class="dropdown-item">Sair</a>
             </div>
           </div>
@@ -79,8 +81,8 @@
         <div class="navbar">
           <div class="container-xl">
             <ul class="navbar-nav">
-              <x-navbar.navbar-item route="{{ route('home.index') }}"
-                title="Dashboard" isActive="{{ request()->routeIs(['home.*']) ? true : false }}" icon="ti-chart-bar">
+              <x-navbar.navbar-item route="{{ route('home.index') }}" title="Dashboard"
+                isActive="{{ request()->routeIs(['home.*']) ? true : false }}" icon="ti-chart-bar">
               </x-navbar.navbar-item>
 
               {{-- <x-navbar.navbar-item route="{{ route('tenant.index') }}"
@@ -110,12 +112,10 @@
                   icon="ti-settings">
                   <x-slot:links>
                     @can('adicionar_usuário')
-                      <a class="dropdown-item"
-                        href="{{ route('users.index') }}">Usuários</a>
+                      <a class="dropdown-item" href="{{ route('users.index') }}">Usuários</a>
                     @endcan
                     @can('adicionar_grupo')
-                      <a class="dropdown-item"
-                        href="{{ route('roles.index') }}">Grupos</a>
+                      <a class="dropdown-item" href="{{ route('roles.index') }}">Grupos</a>
                     @endcan
                   </x-slot:links>
                 </x-navbar.navbar-item>
@@ -137,13 +137,12 @@
       </div>
     </header>
     <div class="page-wrapper">
-
       <div class="container">
-        @if (session()->has('toast_success') || session()->has('toast_error') || $errors->any())
+        @if (session()->has('success') || session()->has('error') || session()->has('warning') || $errors->any())
           <div
-            class="mt-3 alert alert-{{ session()->has('toast_success') ? 'success' : 'danger' }} alert-dismissible fade show"
+            class="mt-3 alert alert-{{ session()->has('success') ? 'success' : (session()->has('error') ? 'danger' : 'warning') }} alert-dismissible fade show"
             role="alert">
-            {{ session('toast_success') ?? session('toast_error') }}
+            {{ session('success') ? session('success') : (session('error') ? session('error') : session('warning')) }}
 
             @if ($errors->any())
               <ul class="mb-0">
@@ -170,7 +169,7 @@
             </div>
             <div class="col-12 col-lg-auto mt-3 mt-lg-0">
               <ul class="list-inline list-inline-dots mb-0">
-                <li class="list-inline-item">                  
+                <li class="list-inline-item">
                   <a href="." class="link-secondary">Otavio</a>&copy; 2025.
                   All rights reserved.
                 </li>
@@ -193,6 +192,7 @@
   <script src="{{ asset('assets/js/demo.min.js?1684106062') }}" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+  <script src="{{ asset('assets/js/kanban/dataTables.min.js') }}"></script>
   {{-- <script src="{{ asset('assets/libs/apexcharts/dist/apexcharts.min.js') }}"></script> --}}
   @yield('scripts')
 

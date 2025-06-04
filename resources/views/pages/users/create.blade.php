@@ -17,6 +17,7 @@
         </div>
         <div class="col-auto ms-auto">
           <div class="btn-list">
+            <a href="{{ route('users.index') }}" class="btn btn-info"><i class="ti ti-arrow-left me-1"></i>Voltar</a>
           </div>
         </div>
       </div>
@@ -32,7 +33,7 @@
               <x-slot:options>
                 <option value="" disabled selected>Selecione</option>
                 <option value="1" {{ old('method') && old('method') == '1' ? 'selected' : '' }}>Manual</option>
-                <option value="0" {{ old('method') && old('method') == '0' ? 'selected' : '' }}>Convite</option>
+                <option value="2" {{ old('method') && old('method') == '2' ? 'selected' : '' }}>Convite</option>
               </x-slot:options>
             </x-form-elements.select.select>
 

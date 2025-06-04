@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Jobs\Auht;
+namespace App\Jobs\Auth;
 
-use App\Mail\Auht\EmailToResetPassword;
+use App\Mail\Auth\EmailToResetPassword;
 use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;

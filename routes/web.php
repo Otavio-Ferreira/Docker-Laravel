@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Web\Auth\LoginController;
+use App\Http\Controllers\Web\Settings\ProfileController;
 use App\Http\Controllers\Web\Settings\RolesController;
 use App\Http\Controllers\Web\Settings\UsersController;
 use App\Http\Controllers\Web\System\HomeController;
@@ -26,6 +27,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('users/sair', [UsersController::class, 'logout'])->name('logout');
     
+    Route::get('perfil', [ProfileController::class, 'index'])->name('profile.index');
+    Route::post('perfil', [ProfileController::class, 'update'])->name('profile.store');
+    
     Route::group(['middleware' => ['auth', 'permission:adicionar_grupo']], function () {
         Route::get('gupos', [RolesController::class, 'index'])->name('roles.index');
         Route::post('grupos/adicionar', [RolesController::class, 'store'])->name('roles.store');
@@ -39,4 +43,5 @@ Route::middleware(['auth'])->group(function () {
         Route::post('usuarios/atualizar/{id}', [UsersController::class, 'update'])->name('users.update');
         Route::delete('usuarios/deletar/{id}', [UsersController::class, 'destroy'])->name('users.destroy');
     });
+
 });

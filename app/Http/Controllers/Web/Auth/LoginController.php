@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\Auth\ResetRequest;
 use App\Http\Requests\Web\Auth\SendRequest;
 use App\Http\Requests\Web\Auth\StoreRequest;
-use App\Jobs\Auht\SendEmailToResetPassword;
+use App\Jobs\Auth\SendEmailToResetPassword;
 use App\Models\UserTokens;
 use App\Repositories\Settings\User\UsersRepository;
 use App\Repositories\Tokens\UserTokens\UsersTokensRepository;
@@ -88,7 +88,8 @@ class LoginController extends Controller
     {
         if (isset($token)) {
             try {
-                $this->userRepository->updatePassword($request, $token);
+                $this->userRepository->updatePassword($request, $token->user_uuid);
+                $this->userRepository->updateStatus($token->user_uuid, 1);
                 $this->userTokensRepository->delete($token->id);
 
                 return to_route('login')->with("success", "Senha atualizada, tente fazer login.");
@@ -98,5 +99,14 @@ class LoginController extends Controller
         }
 
         return redirect()->back()->with("error", "Error ao tentar alterar senha, tente novamente em alguns instantes.")->withInput();
+    }
+
+    public function register(UserTokens $token)
+    {
+        if (isset($token)) {
+            return view('pages.authentication.register')->with('token_id', $token->id);
+        }
+
+        return to_route('login');
     }
 }

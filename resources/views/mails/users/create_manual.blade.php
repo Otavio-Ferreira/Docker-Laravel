@@ -35,24 +35,24 @@
       padding: 20px;
     }
 
-    h2{
-        color: #333F4C;
-        font-size: 26px;
+    h2 {
+      color: #333F4C;
+      font-size: 26px;
     }
 
-    hr{
-        border-top: 1px solid #EAEAEF;
+    hr {
+      border-top: 1px solid #EAEAEF;
     }
 
-    
-    p{
-        color: #4E5964;
-        font-size: 18px;
+
+    p {
+      color: #4E5964;
+      font-size: 18px;
     }
-    
-    span{
-        color: #333F4C;
-        font-weight: bold;
+
+    span {
+      color: #333F4C;
+      font-weight: bold;
     }
 
     a {
@@ -68,20 +68,25 @@
       align-content: center;
       margin: 20px auto 0px auto;
     }
-
   </style>
 </head>
 
 <body>
   <div id="header">
-    <h1>{{$title}}</h1>
+    <h1>Primeiro acesso</h1>
   </div>
   <div id="body">
-    <h2>Instruções para cadastrar senha!</h2>
+    <h2>
+      Credenciais para o primeiro acesso!
+    </h2>
     <hr>
-    <p>Olá, <span>{{ $name }}</span>! <br><br> Você foi cadastrado no sistema <span>{{$title}}</span> no horário <span>{{ $time }}</span>. <br><br> Acesse o link abaixo para iniciar e cadastrar uma senha!</p>
+    <p>Email: <strong>{{ $email }}</strong></p>
+    <p>Senha: <strong>{{ $password }}</strong></p>
     <hr>
-    <a href="{{ $domain }}">Acessar</a>
+    <p>Olá, <span>{{ $name }}</span>! <br><br> Você foi cadastrado no nosso sistema
+      no horário <span>{{ $time }}</span>. <br><br> Acesse o link abaixo para acessar o sistema!
+      <hr>
+      <a href="{{ route('login') }}">Acessar</a>
   </div>
 </body>
 

@@ -43,14 +43,41 @@ class EloquentUsersRepository implements UsersRepository
         return $user;
     }
 
-    public function update($uuid){}
+    public function update($uuid, $request){
+        $user = $this->getByUuid($uuid);
 
-    public function updatePassword($request, $token){
-        $user = $this->getByUuid($token->user_uuid);
-        $user->password = Hash::make($request->password);
+        if ($request->filled('name')) {
+            $user->name = $request->name;
+        }
+        
+        if ($request->filled('status')) {
+            $user->status = $request->status;
+        }        
+
         $user->save();
+
+        return $user;
     }
 
-    public function delete($uuid){}
+    public function updatePassword($request, $uuid){
+        $user = $this->getByUuid($uuid);
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return $user;
+    }
+
+    public function updateStatus($uuid, $status){
+        $user = $this->getByUuid($uuid);
+        $user->status = $status;
+        $user->save();
+
+        return $user;
+    }
+
+    public function delete($uuid){
+        $user = $this->getByUuid($uuid);
+        $user->delete();
+    }
 
 }

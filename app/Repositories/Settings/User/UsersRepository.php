@@ -8,7 +8,8 @@ interface UsersRepository{
   public function getAll(); 
   public function store($request); 
   public function store_all($request, $password); 
-  public function update($uuid); 
-  public function updatePassword($request, $token);
+  public function update($uuid, $request); 
+  public function updatePassword($request, $uuid);
+  public function updateStatus($uuid, $status);
   public function delete($uuid); 
 } 
