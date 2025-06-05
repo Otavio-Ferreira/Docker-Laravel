@@ -11,11 +11,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Str;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles, SoftDeletes;
+    use HasFactory, Notifiable, HasRoles, SoftDeletes, LogsActivity;
 
     /**
      * The attributes that are mass assignable.
@@ -62,5 +64,14 @@ class User extends Authenticatable
                 $model->uuid = (string) Str::uuid();
             }
         });
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['name', 'email'])
+            ->useLogName('users')
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
     }
 }

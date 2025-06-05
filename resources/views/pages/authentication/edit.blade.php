@@ -44,28 +44,7 @@
             <div class="form-footer">
               <button type="submit" class="btn btn-primary w-100">Resetar senha</button>
             </div>
-
-            @if ($errors->any())
-              <div class="alert mt-3 alert-danger alert-dismissible fade show" role="alert">
-                <ul class="mb-0">
-                  @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                  @endforeach
-                </ul>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
-              </div>
-            @endif
-            @foreach (['success', 'error', 'warning'] as $msg)
-              @if (session($msg))
-                <div
-                  class="alert mt-3 alert-{{ $msg == 'success' ? 'success' : ($msg == 'error' ? 'danger' : 'warning') }} alert-dismissible fade show"
-                  role="alert">
-                  {{ session($msg) }}
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
-                </div>
-              @endif
-            @endforeach
-
+            @include('components.message.message')
           </form>
         </div>
       </div>

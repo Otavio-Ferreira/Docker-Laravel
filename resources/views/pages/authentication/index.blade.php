@@ -3,10 +3,6 @@
 @section('content')
   <div class="page page-center">
     <div class="container container-tight py-4">
-      <div class="text-center mb-4">
-        <a href="." class="navbar-brand navbar-brand-autodark"><img src="./static/logo.svg" height="36"
-            alt=""></a>
-      </div>
       <div class="card card-md bg-transparent shadow-none border-0">
         <div class="card-body">
           <h2 class="h2 text-center mb-4">Fazer login na sua conta</h2>
@@ -37,28 +33,7 @@
             <div class="form-footer">
               <button type="submit" class="btn btn-primary w-100">Fazer login</button>
             </div>
-
-            @if ($errors->any())
-              <div class="alert mt-3 alert-danger alert-dismissible fade show" role="alert">
-                <ul class="mb-0">
-                  @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                  @endforeach
-                </ul>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
-              </div>
-            @endif
-            @foreach (['success', 'error', 'warning'] as $msg)
-              @if (session($msg))
-                <div
-                  class="alert mt-3 alert-{{ $msg == 'success' ? 'success' : ($msg == 'error' ? 'danger' : 'warning') }} alert-dismissible fade show"
-                  role="alert">
-                  {{ session($msg) }}
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
-                </div>
-              @endif
-            @endforeach
-
+            @include('components.message.message')
           </form>
         </div>
       </div>
