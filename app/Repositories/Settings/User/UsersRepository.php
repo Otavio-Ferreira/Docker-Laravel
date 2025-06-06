@@ -11,5 +11,6 @@ interface UsersRepository{
   public function update($uuid, $request); 
   public function updatePassword($request, $uuid);
   public function updateStatus($uuid, $status);
+  public function updateLastLogin($uuid);
   public function delete($uuid); 
 } 

@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Settings\Roles;
 
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 
 class EloquentRolesRepository implements RolesRepository

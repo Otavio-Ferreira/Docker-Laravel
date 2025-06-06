@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $user = User::create([
-            'name' => 'Super Admin',
+            'name' => 'Administrador',
             'email' => 'admin@gmail.com',
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
@@ -30,25 +30,22 @@ class DatabaseSeeder extends Seeder
             "1" => "adicionar_grupo",
             "2" => "adicionar_usuário",
             "3" => "ver_dashboard",
+            "4" => "ver_todos_os_logs",
+            "5" => "ver_seus_logs",
         ];
+
+        $role = Role::create([
+            'name' => 'Desenvolvimento',
+            'guard_name' => 'web',
+        ]);
 
         foreach ($permissions as $permission) {
             Permission::create([
                 'name' => $permission,
                 'guard_name' => 'web'
             ]);
+            $role->givePermissionTo($permission);
         }
-
-        $role = Role::create([
-            'name' => 'Gerente',
-            'guard_name' => 'web',
-        ]);
-
-        $role->givePermissionTo([
-            "ver_dashboard",
-            "adicionar_grupo",
-            "adicionar_usuário"
-        ]);
 
         $user->assignRole($role);
     }

@@ -39,7 +39,6 @@
               <i class="icon ti ti-user-plus"></i>
               Adicionar usuário
             </a>
-
             <x-table.search></x-table.search>
           </div>
         </div>
@@ -49,7 +48,7 @@
   <div class="page-body">
     <div class="">
       <div class="table-responsive">
-        <x-table.table tableClass="border unded-3 w-100 table table-vcenter exclude bg-white card-table table-striped"
+        <x-table.table tableClass="border unded-3 w-100 table table-vcenter exclude table-hover card-table table-striped"
           tableId="dataTable">
           <x-slot:ths>
             <th>Nome</th>
@@ -75,55 +74,10 @@
                 <td>
                   <button class="btn btn-secondary" data-bs-toggle="modal"
                     data-bs-target="#modal-edit-user{{ $user->uuid }}"><i class="ti ti-edit"></i></button>
-                  <x-modal.modal route="{{ route('users.update', $user->uuid) }}" id="modal-edit-user{{ $user->uuid }}"
-                    class="modal-dialog-centered" title="Editar usuário" typeBtnClose="button" classBtnClose="me-auto"
-                    textBtnClose="Cancelar" typeBtnSave="submit" classBtnSave="btn-primary" textBtnSave="Salvar">
-                    <x-slot:content>
-                      @include('components.form-elements.input.input', [
-                          'title' => 'Nome',
-                          'type' => 'text',
-                          'class' => 'mb-3',
-                          'name' => 'name',
-                          'required' => 'true',
-                          'value' => $user->name,
-                      ])
-
-                      <x-form-elements.select.select title="Status" id="status" name="status">
-                        <x-slot:options>
-                          <option value="1" {{ $user->status == 1 ? 'selected' : '' }}>Ativo</option>
-                          <option value="0" {{ $user->status == 0 ? 'selected' : '' }}>Inativo</option>
-                        </x-slot:options>
-                      </x-form-elements.select.select>
-
-                      <x-form-elements.select.select title="Grupo de permissões" id="role" name="role">
-                        <x-slot:options>
-                          @foreach ($roles as $role)
-                            <option value="{{ $role->name }}"
-                              {{ $role->name == $user->roles->first()->name ? 'selected' : '' }}>{{ $role->name }}
-                            </option>
-                          @endforeach
-                        </x-slot:options>
-                      </x-form-elements.select.select>
-                    </x-slot:content>
-                  </x-modal.modal>
                 </td>
                 <td>
                   <button class="btn btn-danger" data-bs-toggle="modal"
                     data-bs-target="#modal-delete-user{{ $user->uuid }}"><i class="ti ti-trash"></i></button>
-
-                  <x-modal.modal-alert route="{{ route('users.destroy', $user->uuid) }}"
-                    id="modal-delete-user{{ $user->uuid }}" class="modal-dialog-centered modal-sm"
-                    background="bg-danger" classBody="text-center py-4" title="Excluír usuário" typeBtnClose="button"
-                    classBtnClose="me-auto w-100" textBtnClose="Cancelar" typeBtnSave="submit"
-                    classBtnSave="btn-danger w-100" textBtnSave="Deletar">
-                    <x-slot:content>
-                      <i class="ti ti-alert-triangle icon icon-lg text-danger"></i>
-                      <h3>Tem certeza?</h3>
-                      <div class="text-secondary">
-                        Você realmente deseja remover esse registro? Não será possível restaurá-lo depois!
-                      </div>
-                    </x-slot:content>
-                  </x-modal.modal-alert>
                 </td>
               </tr>
             @endforeach
@@ -132,6 +86,51 @@
       </div>
     </div>
   </div>
+  @foreach ($users as $user)
+    <x-modal.modal route="{{ route('users.update', $user->uuid) }}" id="modal-edit-user{{ $user->uuid }}"
+      class="modal-dialog-centered" title="Editar usuário" typeBtnClose="button" classBtnClose="me-auto"
+      textBtnClose="Cancelar" typeBtnSave="submit" classBtnSave="btn-primary" textBtnSave="Salvar">
+      <x-slot:content>
+        @include('components.form-elements.input.input', [
+            'title' => 'Nome',
+            'type' => 'text',
+            'class' => 'mb-3',
+            'name' => 'name',
+            'required' => 'true',
+            'value' => $user->name,
+        ])
+
+        <x-form-elements.select.select title="Status" id="status" name="status">
+          <x-slot:options>
+            <option value="1" {{ $user->status == 1 ? 'selected' : '' }}>Ativo</option>
+            <option value="0" {{ $user->status == 0 ? 'selected' : '' }}>Inativo</option>
+          </x-slot:options>
+        </x-form-elements.select.select>
+
+        <x-form-elements.select.select title="Grupo de permissões" id="role" name="role">
+          <x-slot:options>
+            @foreach ($roles as $role)
+              <option value="{{ $role->name }}" {{ $role->name == $user->roles->first()->name ? 'selected' : '' }}>
+                {{ $role->name }}
+              </option>
+            @endforeach
+          </x-slot:options>
+        </x-form-elements.select.select>
+      </x-slot:content>
+    </x-modal.modal>
+    <x-modal.modal-alert route="{{ route('users.destroy', $user->uuid) }}" id="modal-delete-user{{ $user->uuid }}"
+      class="modal-dialog-centered modal-sm" background="bg-danger" classBody="text-center py-4" title="Excluír usuário"
+      typeBtnClose="button" classBtnClose="me-auto w-100" textBtnClose="Cancelar" typeBtnSave="submit"
+      classBtnSave="btn-danger w-100" textBtnSave="Deletar">
+      <x-slot:content>
+        <i class="ti ti-alert-triangle icon icon-lg text-danger"></i>
+        <h3>Tem certeza?</h3>
+        <div class="text-secondary">
+          Você realmente deseja remover esse registro? Não será possível restaurá-lo depois!
+        </div>
+      </x-slot:content>
+    </x-modal.modal-alert>
+  @endforeach
 @endsection
 @section('scripts')
   <script src="{{ asset('assets/js/kanban/startOneDataTable.js') }}"></script>

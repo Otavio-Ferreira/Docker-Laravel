@@ -81,30 +81,9 @@
         <div class="navbar">
           <div class="container-xl">
             <ul class="navbar-nav">
-              <x-navbar.navbar-item route="{{ route('home.index') }}" title="Dashboard"
-                isActive="{{ request()->routeIs(['home.*']) ? true : false }}" icon="ti-chart-bar">
+              <x-navbar.navbar-item route="{{ route('home.index') }}" title="Home"
+                isActive="{{ request()->routeIs(['home.*']) ? true : false }}" icon="ti-home">
               </x-navbar.navbar-item>
-
-              {{-- <x-navbar.navbar-item route="{{ route('tenant.index') }}"
-                title="Tenants" isActive="{{ request()->routeIs(['tenant.*']) ? true : false }}"
-                icon="ti-binary-tree-2">
-              </x-navbar.navbar-item> --}}
-
-              {{-- <x-navbar.navbar-item route="{{ route('app.index') }}"
-                title="Apps" isActive="{{ request()->routeIs(['app.*']) ? true : false }}"
-                icon="ti-apps">
-              </x-navbar.navbar-item> --}}
-
-              {{-- <x-navbar.navbar-item route="{{ route('logs.index') }}"
-                title="Logs" isActive="{{ request()->routeIs(['logs.*']) ? true : false }}"
-                icon="ti-device-cctv">
-              </x-navbar.navbar-item> --}}
-
-              {{-- @canany('adicionar_apps')
-                <x-navbar.navbar-item route="{{ tenant() ? tenant_route_url('tenant') : route('apps.index') }}"
-                  title="Apps" isActive="{{ request()->routeIs(['apps.*']) ? true : false }}" icon="ti-apps">
-                </x-navbar.navbar-item>
-              @endcan --}}
 
               @canany(['adicionar_usuário', 'adicionar_grupo', 'adicionar_permissões'])
                 <x-navbar.navbar-item route="" title="Configurações"
@@ -121,16 +100,19 @@
                 </x-navbar.navbar-item>
               @endcanany
 
-              {{-- @role('SuperAdmin')
-                            <x-navbar.navbar-item route="" title="Configurações" isActive="{{request()->routeIs(['users.*', 'roles.*','permissions.*']) ? true : false}}" icon="ti-settings">
-                                <x-slot:links>
-                                    <a class="dropdown-item" href="{{route('companies.index')}}">Empresas</a>
-                                    <a class="dropdown-item" href="{{route('users.index')}}">Usuários</a>
-                                    <a class="dropdown-item" href="{{route('roles.index')}}">Grupos</a>
-                                    <a class="dropdown-item" href="{{route('permissions.index')}}">Permissões</a>
-                                </x-slot:links>
-                            </x-navbar.navbar-item>
-                            @endrole --}}
+              @canany(['ver_todos_os_logs', 'ver_seus_logs'])
+                <x-navbar.navbar-item route="" title="Ferramentas"
+                  isActive="{{ request()->routeIs(['logs.*']) ? true : false }}" icon="ti-tools">
+                  <x-slot:links>
+                    @can('ver_todos_os_logs')
+                      <a class="dropdown-item" href="{{ route('logs.index') }}">Logs</a>
+                    @endcan
+                    @can('ver_seus_logs')
+                      <a class="dropdown-item" href="{{ route('logs.user') }}">Registros de atividade</a>
+                    @endcan
+                  </x-slot:links>
+                </x-navbar.navbar-item>
+              @endcanany
             </ul>
           </div>
         </div>

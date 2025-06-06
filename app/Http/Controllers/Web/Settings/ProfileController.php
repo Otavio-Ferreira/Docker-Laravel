@@ -35,13 +35,18 @@ class ProfileController extends Controller
             'email' => $user->email,
             'password' => $request->actual_password,
         ];
-        try {
 
-            if (Auth::attempt($credentials)) {
-                $this->usersRepository->update($user->uuid, $request);
-                $this->usersRepository->updatePassword($request, $user->uuid);
+        try {
+            if ($request->actual_password != null) {
+                if (Auth::attempt($credentials)) {
+                    $this->usersRepository->update($user->uuid, $request);
+                    $this->usersRepository->updatePassword($request, $user->uuid);
+                } else {
+                    return redirect()->back()->with('error', 'Senha atual não correspondente, tente novamente.');
+                }
             } else {
-                return redirect()->back()->with('error', 'Senha atual não correspondente, tente novamente.');
+                $this->usersRepository->update($user->uuid, $request);
+                return redirect()->back()->with('success', 'Informações atualizadas com sucesso.');
             }
 
             return redirect()->back()->with('success', 'Informações atualizadas com sucesso.');

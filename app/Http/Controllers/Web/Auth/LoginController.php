@@ -12,6 +12,7 @@ use App\Repositories\Settings\User\UsersRepository;
 use App\Repositories\Tokens\UserTokens\UsersTokensRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\RateLimiter;
 
 class LoginController extends Controller
 {
@@ -35,10 +36,22 @@ class LoginController extends Controller
     public function store(StoreRequest $request)
     {
 
+        $key = 'login|' . $request->ip();
+
+        if (RateLimiter::tooManyAttempts($key, 3)) {
+            $seconds = RateLimiter::availableIn($key);
+
+            return back()->with('error', "Muitas tentativas. Tente novamente em {$seconds} segundos.");
+        }
+
+        RateLimiter::hit($key, 300);
+
         $credentials = $request->only(['email', 'password']);
 
         if (Auth::attempt($credentials)) {
             if (Auth::user()->status == 1) {
+                session(['last_login_temp' => Auth::user()->last_login_at]);
+                $this->userRepository->updateLastLogin(Auth::user()->uuid);
                 return redirect()->route('home.index');
             } else {
                 Auth::logout();
@@ -73,6 +86,7 @@ class LoginController extends Controller
                 return redirect()->back()->with("error", "Erro ao enviar o email, tente novamente em alguns instantes.")->withInput();
             }
         }
+        return redirect()->back()->with("error", "Erro ao enviar o email, tente novamente em alguns instantes.")->withInput();
     }
 
     public function edit(UserTokens $token)

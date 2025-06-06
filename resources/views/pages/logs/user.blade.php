@@ -24,24 +24,21 @@
     <div class="">
       <div class="row g-2 align-items-center">
         <div class="col">
-          <div class="col">
-            <div class="page-pretitle">
-              <a href="{{ route('logs.index') }}">Logs</a>
-            </div>
-            <h2 class="page-title">
-              Todos os logs
-            </h2>
+          <div class="page-pretitle">
+            <a href="{{ route('logs.user') }}">Logs</a>
           </div>
+          <h2 class="page-title">
+            Suas atividades
+          </h2>
         </div>
         <div class="col-auto ms-auto">
-          <div class="btn-list">
-            <x-table.search></x-table.search>
-          </div>
+          <x-table.search></x-table.search>
         </div>
       </div>
     </div>
   </div>
   <div class="page-body">
+
     <div class="">
       <div class="table-responsive">
         <x-table.table tableClass="border unded-3 w-100 table table-vcenter exclude table-hover card-table table-striped"
@@ -92,7 +89,7 @@
               @endif
 
               @if (!empty($log->properties['attributes']))
-                <label><strong>{{ !empty($log->properties['old']) ? 'Depois' : 'Detalhes' }}</strong></label>
+                <label><strong>{{ !empty($log->properties['old']) ? 'Depois' : 'Detalhes'}}</strong></label>
                 <pre>{{ json_encode($log->properties['attributes'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) }}</pre>
               @endif
             @endif

@@ -1,7 +1,7 @@
 @if (session()->has('success') || session()->has('error') || session()->has('warning') || $errors->any())
   <div
     class="mt-3 alert alert-{{ session()->has('success') ? 'success' : (session()->has('error') ? 'danger' : 'warning') }} alert-dismissible fade show"
-    role="alert">
+    role="alert" id="alert">
     {{ session('success') ? session('success') : (session('error') ? session('error') : session('warning')) }}
 
     @if ($errors->any())

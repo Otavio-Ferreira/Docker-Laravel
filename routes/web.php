@@ -5,6 +5,7 @@ use App\Http\Controllers\Web\Settings\ProfileController;
 use App\Http\Controllers\Web\Settings\RolesController;
 use App\Http\Controllers\Web\Settings\UsersController;
 use App\Http\Controllers\Web\System\HomeController;
+use App\Http\Controllers\Web\Tools\LogsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -42,6 +43,14 @@ Route::middleware(['auth'])->group(function () {
         Route::post('usuarios/adicionar', [UsersController::class, 'store'])->name('users.store');
         Route::post('usuarios/atualizar/{id}', [UsersController::class, 'update'])->name('users.update');
         Route::delete('usuarios/deletar/{id}', [UsersController::class, 'destroy'])->name('users.destroy');
+    });
+
+    Route::group(['middleware' => ['auth', 'permission:ver_todos_os_logs']], function () {
+        Route::get('atividades', [LogsController::class, 'index'])->name('logs.index');
+    });
+
+    Route::group(['middleware' => ['auth', 'permission:ver_seus_logs']], function () {
+        Route::get('usuarios/atividade', [LogsController::class, 'getUserLogs'])->name('logs.user');
     });
 
 });

@@ -20,6 +20,10 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->boolean('status')->default(0);
             $table->rememberToken();
+            $table->string('cpf')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('birth')->nullable();
+            $table->timestamp('last_login_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

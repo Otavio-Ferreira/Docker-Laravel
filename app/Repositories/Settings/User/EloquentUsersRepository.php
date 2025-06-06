@@ -52,6 +52,18 @@ class EloquentUsersRepository implements UsersRepository
         
         if ($request->filled('status')) {
             $user->status = $request->status;
+        }       
+
+        if ($request->filled('cpf')) {
+            $user->cpf = $request->cpf;
+        }
+
+        if ($request->filled('birth')) {
+            $user->birth = $request->birth;
+        }
+
+        if ($request->filled('phone')) {
+            $user->phone = $request->phone;
         }        
 
         $user->save();
@@ -72,6 +84,15 @@ class EloquentUsersRepository implements UsersRepository
         $user->status = $status;
         $user->save();
 
+        return $user;
+    }
+
+    public function updateLastLogin($uuid){
+        $user = $this->getByUuid($uuid);
+        $user->timestamps = false;
+        $user->last_login_at = now();
+        $user->save();
+        $user->timestamps = true;
         return $user;
     }
 
